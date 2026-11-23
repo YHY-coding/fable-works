@@ -1,0 +1,39 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#0e1116"><title>積み塔</title><style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;height:100%;background:#0e1116;color:#e9e4d8;font-family:-apple-system,"Hiragino Sans","Yu Gothic",sans-serif;overscroll-behavior:none;touch-action:none;user-select:none;-webkit-user-select:none}a{color:#d9a441}
+canvas{position:fixed;inset:0;width:100%;height:100%}
+#hud{position:fixed;left:0;right:0;top:max(14px,env(safe-area-inset-top));text-align:center;pointer-events:none}
+#sc{font-size:56px;font-weight:300;letter-spacing:.04em}#bs{font-size:13px;color:#9a968c}
+#msg{white-space:pre-line;position:fixed;left:0;right:0;bottom:18%;text-align:center;font-size:18px;color:#cfc9bb;pointer-events:none;line-height:1.8}
+#back{position:fixed;left:12px;bottom:max(12px,env(safe-area-inset-bottom));font-size:13px;pointer-events:auto}
+</style></head><body><canvas id="c"></canvas>
+<div id="hud"><div id="sc">0</div><div id="bs"></div></div><div id="msg">タップで 開始<br><small>ブロックが動く。タップで落として、ぴったり重ねる</small></div>
+<a id="back" href="../">← 作品一覧</a>
+<script>
+(()=>{const c=document.getElementById('c'),g=c.getContext('2d');let W,H,dpr;
+function rs(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;c.width=W*dpr;c.height=H*dpr;g.setTransform(dpr,0,0,dpr,0,0);}addEventListener('resize',rs);rs();
+const BH=26;let st='title',blocks,cur,dir,speed,score,best=0,camY,fall=[],level;
+try{best=+localStorage.getItem('tower_best')||0}catch(e){}
+const bs=document.getElementById('bs'),sc=document.getElementById('sc'),msg=document.getElementById('msg');
+function showBest(){bs.textContent=best?'ベスト '+best:''}showBest();
+function col(i,l){return 'hsl('+((200+i*9)%360)+',55%,'+(l||58)+'%)'}
+function reset(){const w=Math.min(220,W*.6);blocks=[{x:W/2-w/2,w,i:0}];score=0;level=1;camY=0;fall=[];speed=2.2;spawn();sc.textContent='0';}
+function spawn(){const p=blocks[blocks.length-1];cur={x:-p.w,w:p.w,i:blocks.length};dir=1;}
+function drop(){const p=blocks[blocks.length-1];const l=Math.max(cur.x,p.x),r=Math.min(cur.x+cur.w,p.x+p.w);const ov=r-l;
+ if(ov<=0){fall.push({x:cur.x,w:cur.w,i:cur.i,y:0,v:0});st='over';end();return;}
+ if(Math.abs(cur.x-p.x)<5){cur.x=p.x;cur.w=p.w;}else{if(cur.x<l)fall.push({x:cur.x,w:l-cur.x,i:cur.i,y:0,v:0});if(cur.x+cur.w>r)fall.push({x:r,w:cur.x+cur.w-r,i:cur.i,y:0,v:0});cur.x=l;cur.w=ov;}
+ blocks.push({x:cur.x,w:cur.w,i:cur.i});score++;sc.textContent=score;speed=Math.min(6.5,2.2+score*.12);spawn();}
+function end(){if(score>best){best=score;try{localStorage.setItem('tower_best',best)}catch(e){}}showBest();msg.textContent='おしまい  '+score+' 段\nタップで もう一度';msg.style.display='block';}
+function tap(e){e.preventDefault();if(st==='title'){reset();st='play';msg.style.display='none';}else if(st==='play')drop();else if(st==='over'){if(over0>400){reset();st='play';msg.style.display='none';}}}
+let over0=0;addEventListener('pointerdown',e=>{if(e.target.id==='back')return;tap(e)});
+addEventListener('keydown',e=>{if(e.code==='Space')tap(e)});
+function loop(){requestAnimationFrame(loop);
+ if(st==='over'){over0+=16;} else over0=0;
+ if(st==='play'){cur.x+=dir*speed;if(cur.x+cur.w>W){dir=-1}if(cur.x<0&&dir<0){dir=1}}
+ const targetCam=Math.max(0,(blocks.length-8)*BH);camY+=(targetCam-camY)*.12;
+ g.clearRect(0,0,W,H);const gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,'#141a24');gr.addColorStop(1,'#0e1116');g.fillStyle=gr;g.fillRect(0,0,W,H);
+ const base=H-70+camY;
+ blocks.forEach((b,k)=>{g.fillStyle=col(b.i);g.fillRect(b.x,base-k*BH-BH,b.w,BH-2);});
+ if(st==='play'&&cur){g.fillStyle=col(cur.i,66);g.fillRect(cur.x,base-blocks.length*BH-BH,cur.w,BH-2);}
+ fall.forEach(f=>{f.v+=.6;f.y+=f.v;g.fillStyle=col(f.i);g.fillRect(f.x,base-(f.i)*BH-BH+f.y,f.w,BH-2);});fall=fall.filter(f=>f.y<H);
+ }
+reset();st='title';loop();})();
+</script></body></html>

@@ -1,0 +1,26 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#0e1116"><title>光の順番</title><style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;height:100%;background:#0e1116;color:#e9e4d8;font-family:-apple-system,"Hiragino Sans","Yu Gothic",sans-serif;overscroll-behavior:none;touch-action:none;user-select:none;-webkit-user-select:none}a{color:#d9a441}
+body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;touch-action:manipulation}
+#grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:min(86vw,340px)}
+.p{aspect-ratio:1;border-radius:18px;border:0;opacity:.35;transition:opacity .12s,transform .12s}.p.on{opacity:1;transform:scale(.97)}
+#p0{background:#d9534f}#p1{background:#d9a441}#p2{background:#4f9d69}#p3{background:#4a86c5}
+#st{font-size:20px;min-height:30px}#bs{font-size:13px;color:#9a968c}
+button.s{font:inherit;font-size:16px;color:#e9e4d8;background:#1a2029;border:1px solid #3a4250;border-radius:10px;padding:12px 22px;min-height:44px}
+#back{position:fixed;left:12px;top:max(12px,env(safe-area-inset-top));font-size:13px}
+</style></head><body><a id="back" href="../">← 作品一覧</a>
+<div id="st">開始を押す</div><div id="grid"><button class="p" id="p0" aria-label="赤"></button><button class="p" id="p1" aria-label="黄"></button><button class="p" id="p2" aria-label="緑"></button><button class="p" id="p3" aria-label="青"></button></div>
+<div id="bs"></div><button class="s" id="go">開始</button>
+<script>
+(()=>{const P=[0,1,2,3].map(i=>document.getElementById('p'+i)),st=document.getElementById('st'),bs=document.getElementById('bs'),go=document.getElementById('go');
+const F=[262,330,392,523];let ac=null,seq=[],pos=0,acc=false,best=0,busy=false,gen=0;
+try{best=+localStorage.getItem('simon_best')||0}catch(e){}function sb(){bs.textContent=best?'ベスト '+best+' 手':''}sb();
+function tone(i){try{if(!ac)ac=new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=F[i];g.gain.setValueAtTime(.0001,ac.currentTime);g.gain.exponentialRampToValueAtTime(.2,ac.currentTime+.02);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+.3);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+.32);}catch(e){}}
+const sl=ms=>new Promise(r=>setTimeout(r,ms));
+async function flash(i,d){P[i].classList.add('on');tone(i);await sl(d||320);P[i].classList.remove('on');}
+async function show(my){busy=true;acc=false;st.textContent='見て';await sl(500);for(const i of seq){if(my!==gen)return;await flash(i);await sl(160);}if(my!==gen)return;pos=0;busy=false;acc=true;st.textContent='おなじ順に タップ';}
+function next(){gen++;seq.push(Math.floor(Math.random()*4));show(gen);}
+go.onclick=()=>{ if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}seq=[];gen++;next();go.textContent='はじめから';};
+P.forEach((b,i)=>b.addEventListener('pointerdown',async e=>{e.preventDefault();if(!acc)return;flash(i,180);
+ if(seq[pos]!==i){acc=false;const n=seq.length-1;if(n>best){best=n;try{localStorage.setItem('simon_best',best)}catch(e){}}sb();st.textContent='ちがう!  '+n+' 手まで';return;}
+ pos++;if(pos===seq.length){acc=false;st.textContent='正解';await sl(700);next();}}));
+})();
+</script></body></html>
