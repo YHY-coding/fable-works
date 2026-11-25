@@ -1,16 +1,100 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0e1116"><title>Fableでつくった小さな作品</title>
-<style>:root{--bg:#0e1116;--fg:#e9e4d8;--mut:#9a968c;--card:#161c25;--line:#2a3240;--acc:#d9a441}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,"Hiragino Sans","Yu Gothic",sans-serif;line-height:1.7;padding:0 16px max(32px,env(safe-area-inset-bottom))}
-main{max-width:560px;margin:0 auto}h1{font-size:26px;font-weight:500;margin:36px 0 6px}p.lead{color:var(--mut);margin:0 0 24px;font-size:15px}
-a.card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:12px}
-a.card:active{border-color:var(--acc)}.t{font-size:19px}.t small{color:var(--acc);font-size:12px;margin-left:8px;letter-spacing:.1em}.d{color:var(--mut);font-size:14px;margin-top:4px}
-footer{color:var(--mut);font-size:12px;margin-top:28px;line-height:1.8}</style></head><body><main>
-<h1>Fableでつくった小さな作品</h1>
-<p class="lead">AI(Claude Fable 5.2)に作ってもらった、ブラウザで遊べる小品です。インストール不要。通信も登録もありません。スマホは縦向きでどうぞ(ミニFPSだけ横向き)。</p>
-<a class="card" href="tower/"><div class="t">積み塔<small>GAME</small></div><div class="d">動くブロックをタップで落として、ぴったり重ねる。1タップで遊べる。</div></a>
-<a class="card" href="simon/"><div class="t">光の順番<small>GAME</small></div><div class="d">光った順番を覚えて、同じ順にタップ。音つき。</div></a>
-<a class="card" href="garden/"><div class="t">粒子の庭<small>TOY</small></div><div class="d">指でなぞると光の粒が咲く。3つのモード。</div></a>
-<a class="card" href="breath/"><div class="t">ひと息タイマー<small>TOOL</small></div><div class="d">円のふくらみに合わせて、ゆっくり息をするだけのタイマー。</div></a>
-<a class="card" href="https://yhy-coding.github.io/mini-fps/"><div class="t">雨の倉庫(ミニFPS)<small>GAME・スマホ横向き</small></div><div class="d">WebGLで作った3Dの小さなゲーム。ドローン3体を壊して脱出する。</div></a>
-<footer>すべて1ファイルで動き、外部への通信はしません。ベスト記録だけ、この端末のブラウザに保存されます。<br>ひと息タイマーは時間を計るだけのもので、医療・治療を目的としたものではありません。<br>各作品は動作確認の範囲に限ります(確認した環境はREADMEに記載)。</footer>
-</main></body></html>
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#11151c">
+<title>Nocturne Works|AIと作った、ゲーム・アプリ・道具</title>
+<meta name="description" content="AI(Claude)と作って公開している、ブラウザのゲーム、Webアプリ、LPの見本、Claude Code用プラグインの一覧です。">
+<style>
+:root{--bg:#11151c;--fg:#ece7dc;--mut:#a29d92;--line:#2c333f;--acc:#e0b25c;
+--serif:"Hiragino Mincho ProN","Yu Mincho",serif;--sans:-apple-system,"Hiragino Sans","Yu Gothic",sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.85 var(--sans);-webkit-text-size-adjust:100%;padding:0 20px max(40px,env(safe-area-inset-bottom))}
+main,header,footer{max-width:680px;margin:0 auto}
+a{color:inherit}
+header{padding:56px 0 40px;border-bottom:1px solid var(--line)}
+.mark{font-size:13px;letter-spacing:.28em;color:var(--acc);margin:0 0 22px}
+h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,9.6vw,54px);line-height:1.4;margin:0 0 22px;letter-spacing:.03em}
+.lead{color:var(--mut);margin:0;max-width:30em}
+nav{display:flex;flex-wrap:wrap;gap:0 2px;margin:26px 0 0 -8px}
+nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;font-size:14px;text-decoration:none;border-bottom:1px solid transparent}
+nav a{text-decoration:underline;text-decoration-color:var(--acc);text-underline-offset:6px}
+section{padding:52px 0 8px}
+h2{font-family:var(--serif);font-weight:500;font-size:27px;line-height:1.4;margin:0 0 6px;letter-spacing:.04em}
+.k{display:block;font-family:var(--sans);font-size:12px;letter-spacing:.24em;color:var(--acc);margin-bottom:6px}
+.sub{color:var(--mut);font-size:15px;margin:0 0 18px}
+ul{list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}
+li{border-bottom:1px solid var(--line)}
+li a{display:grid;grid-template-columns:1fr auto;gap:2px 16px;align-items:baseline;padding:18px 0;text-decoration:none;min-height:64px}
+.t{font-size:20px;line-height:1.5;font-weight:600}
+.d{grid-column:1/-1;color:var(--mut);font-size:15px;line-height:1.75}
+.g{font-size:12px;letter-spacing:.14em;color:var(--mut);white-space:nowrap}
+li a::after{content:none}
+li a:hover .t,li a:active .t{color:var(--acc)}
+a:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
+footer{margin-top:56px;padding-top:24px;border-top:1px solid var(--line);color:var(--mut);font-size:14px;line-height:1.9}
+footer p{margin:0 0 10px}
+h1,h2,.t,.d,p{word-break:auto-phrase;text-wrap:pretty}
+@media(min-width:720px){body{font-size:18px}header{padding:88px 0 56px}.t{font-size:22px}}
+</style>
+</head>
+<body>
+<header>
+  <p class="mark">NOCTURNE WORKS</p>
+  <h1>AIと作った、<br>ゲーム・アプリ・道具。</h1>
+  <p class="lead">AI(Claude)に作ってもらったものを置いています。どれも、ブラウザでそのまま開けます。</p>
+  <nav aria-label="ページ内">
+    <a href="#play">あそぶ</a><a href="#apps">アプリ</a><a href="#lp">LPの見本</a><a href="#plugins">プラグイン</a>
+  </nav>
+</header>
+<main>
+<section id="play">
+  <h2><span class="k">01 PLAY</span>あそぶ</h2>
+  <p class="sub">インストールも登録もいりません。スマホは縦向きでどうぞ。</p>
+  <ul>
+    <li><a href="https://yhy-coding.github.io/rain-depot/"><span class="t">雨の倉庫(RAIN DEPOT)</span><span class="g">3Dゲーム</span><span class="d">ブラウザで動くミニFPSの試作。PC版とスマホ版があります。</span></a></li>
+    <li><a href="tower/"><span class="t">積み塔</span><span class="g">ゲーム</span><span class="d">動くブロックをタップで落として、ぴったり重ねる。1タップで遊べます。</span></a></li>
+    <li><a href="simon/"><span class="t">光の順番</span><span class="g">ゲーム</span><span class="d">光った順番を覚えて、同じ順にタップ。音つき。</span></a></li>
+    <li><a href="garden/"><span class="t">粒子の庭</span><span class="g">おもちゃ</span><span class="d">指でなぞると光の粒が咲きます。3つのモード。</span></a></li>
+    <li><a href="breath/"><span class="t">ひと息タイマー</span><span class="g">道具</span><span class="d">円のふくらみに合わせて、ゆっくり息をするだけのタイマー。</span></a></li>
+  </ul>
+</section>
+
+<section id="apps">
+  <h2><span class="k">02 APPS</span>アプリ</h2>
+  <p class="sub">記録は、開いた端末の中だけに保存されます。名前に(仮)が付くものは、名前が決まっていません。</p>
+  <ul>
+    <li><a href="https://yhy-coding.github.io/oshi-henreki/"><span class="t">VEBANT</span><span class="g">記録</span><span class="d">推しの年表を作って、友達と見せ合うアプリ。</span></a></li>
+    <li><a href="https://yhy-coding.github.io/gohan-touban/"><span class="t">ごはん当番(仮)</span><span class="g">テスト版</span><span class="d">冷蔵庫の中身から、平日5日分の夕飯を提案します。カロリーは目安で、アレルギーへの対応を保証するものではありません。</span></a></li>
+    <li><a href="https://yhy-coding.github.io/kakeibo/"><span class="t">ボーナス家計簿</span><span class="g">家計</span><span class="d">自分用に作った家計簿アプリ。</span></a></li>
+  </ul>
+</section>
+
+<section id="lp">
+  <h2><span class="k">03 PAGE</span>LPの見本</h2>
+  <p class="sub">架空の見本です。実績・口コミではありません。</p>
+  <ul>
+    <li><a href="https://yhy-coding.github.io/lp-sample-akari/"><span class="t">ヘア&amp;ネイル 灯(あかり)</span><span class="g">架空の店</span><span class="d">美容サロンの紹介ページの見本。店名・住所・価格はすべて架空です。</span></a></li>
+  </ul>
+</section>
+
+<section id="plugins">
+  <h2><span class="k">04 TOOLS</span>プラグイン</h2>
+  <p class="sub">Claude Code用の道具です。自分の作業で使うために作り、GitHubで公開しています。</p>
+  <ul>
+    <li><a href="https://github.com/YHY-coding/publish-guard"><span class="t">publish-guard</span><span class="g">公開の確認</span><span class="d">公開の前後に確かめる。秘密・個人情報の検索、公開後の突き合わせ、保証表現の検出。</span></a></li>
+    <li><a href="https://github.com/YHY-coding/pwa-kit"><span class="t">pwa-kit</span><span class="g">アプリ作り</span><span class="d">端末の中だけで動く小さなPWAを作って確かめる。雛形・架空データ・iPhone幅の確認。</span></a></li>
+    <li><a href="https://github.com/YHY-coding/hasshin-kit"><span class="t">hasshin-kit</span><span class="g">発信の準備</span><span class="d">投稿の下書きとXの字数の確認、LP・UIの見本帳。投稿はしません。</span></a></li>
+  </ul>
+</section>
+</main>
+<footer>
+  <p>このページの小さな作品(積み塔・光の順番・粒子の庭・ひと息タイマー)は、1ファイルで動き、外部への通信はしません。ベスト記録だけ、この端末のブラウザに保存されます。</p>
+  <p>ひと息タイマーは時間を計るだけのもので、医療・治療を目的としたものではありません。</p>
+  <p>各作品は動作確認の範囲に限ります(確認した環境は、それぞれのREADMEに記載)。リンクは2026年11月25日に開けることを確かめました。</p>
+  <p>Nocturne Works</p>
+</footer>
+</body>
+</html>
