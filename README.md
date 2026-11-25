@@ -9,7 +9,7 @@ Claude Fable 5.2 に作ってもらった、ブラウザで動く小品集です
 | garden/ | 粒子の庭(なぞって遊ぶ) |
 | breath/ | ひと息タイマー(時間を計るだけ。医療目的ではありません) |
 
-`index.html` は、公開している制作物(ゲーム・アプリ・LPの見本・Claude Code用プラグイン)への入口です(リンクは 2026-11-25 に開けることを確認)。
+`index.html` は、公開している制作物(ゲーム・アプリ・LPの見本・Claude Code用プラグイン)への入口です(リンクは 2026-11-25 に開けることを確認)。プラグインの欄には、Claude Code 用プラグイン4つ(publish-guard・pwa-kit・hasshin-kit・decision-card)と、それぞれのスキルへのリンクがあります。
 
 ミニFPS(雨の倉庫)は別リポジトリ: https://yhy-coding.github.io/rain-depot/
 

@@ -33,6 +33,16 @@ li a{display:grid;grid-template-columns:1fr auto;gap:2px 16px;align-items:baseli
 .g{font-size:12px;letter-spacing:.14em;color:var(--mut);white-space:nowrap}
 li a::after{content:none}
 li a:hover .t,li a:active .t{color:var(--acc)}
+.pl{padding-bottom:16px}
+.pl>a.ph{padding-bottom:10px;min-height:0}
+.sk-h{margin:0 0 2px;font-size:12px;letter-spacing:.24em;color:var(--acc)}
+.sk{border-top:0}
+.sk li{border-bottom:0}
+.sk li a{display:block;padding:9px 0 9px 14px;min-height:44px;border-left:1px solid var(--line)}
+.sk code{display:block;font:600 15px/1.6 ui-monospace,Menlo,monospace;color:var(--fg)}
+.sk span{display:block;color:var(--mut);font-size:14px;line-height:1.7}
+.sk li a:hover code,.sk li a:active code{color:var(--acc)}
+.note{color:var(--mut);font-size:14px;margin:16px 0 0}
 a:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
 footer{margin-top:56px;padding-top:24px;border-top:1px solid var(--line);color:var(--mut);font-size:14px;line-height:1.9}
 footer p{margin:0 0 10px}
@@ -46,7 +56,7 @@ h1,h2,.t,.d,p{word-break:auto-phrase;text-wrap:pretty}
   <h1>AIと作った、<br>ゲーム・アプリ・道具。</h1>
   <p class="lead">AI(Claude)に作ってもらったものを置いています。どれも、ブラウザでそのまま開けます。</p>
   <nav aria-label="ページ内">
-    <a href="#play">あそぶ</a><a href="#apps">アプリ</a><a href="#lp">LPの見本</a><a href="#plugins">プラグイン</a>
+    <a href="#play">あそぶ</a><a href="#apps">アプリ</a><a href="#lp">LPの見本</a><a href="#plugins">Claudeプラグイン</a>
   </nav>
 </header>
 <main>
@@ -81,13 +91,23 @@ h1,h2,.t,.d,p{word-break:auto-phrase;text-wrap:pretty}
 </section>
 
 <section id="plugins">
-  <h2><span class="k">04 TOOLS</span>プラグイン</h2>
-  <p class="sub">Claude Code用の道具です。自分の作業で使うために作り、GitHubで公開しています。</p>
+  <h2><span class="k">04 CLAUDE CODE PLUGINS</span>Claude Code プラグイン</h2>
+  <p class="sub">AnthropicのAI「Claude」の開発用ツール、Claude Code に足して使うプラグインです。中身はスキル(Claudeに読ませる手順書)と、手元で動くスクリプト。自分の作業用に作り、GitHubで公開しています(MITライセンス・無保証)。</p>
   <ul>
-    <li><a href="https://github.com/YHY-coding/publish-guard"><span class="t">publish-guard</span><span class="g">公開の確認</span><span class="d">公開の前後に確かめる。秘密・個人情報の検索、公開後の突き合わせ、保証表現の検出。</span></a></li>
-    <li><a href="https://github.com/YHY-coding/pwa-kit"><span class="t">pwa-kit</span><span class="g">アプリ作り</span><span class="d">端末の中だけで動く小さなPWAを作って確かめる。雛形・架空データ・iPhone幅の確認。</span></a></li>
-    <li><a href="https://github.com/YHY-coding/hasshin-kit"><span class="t">hasshin-kit</span><span class="g">発信の準備</span><span class="d">投稿の下書きとXの字数の確認、LP・UIの見本帳。投稿はしません。</span></a></li>
+    <li class="pl"><a class="ph" href="https://github.com/YHY-coding/publish-guard"><span class="t">publish-guard</span><span class="g">公開の確認</span><span class="d">公開の前後に確かめる。秘密・個人情報の検索、公開後の突き合わせ、保証表現の検出。</span></a>
+      <p class="sk-h">SKILLS 4</p>
+      <ul class="sk"><li><a href="https://github.com/YHY-coding/publish-guard/tree/main/skills/prepublish-scan"><code>prepublish-scan</code><span>出す前に、鍵・メール・絶対パスなどを検索する</span></a></li><li><a href="https://github.com/YHY-coding/publish-guard/tree/main/skills/publish-verify"><code>publish-verify</code><span>出したあと、公開先と手元を1ファイルずつ比べる</span></a></li><li><a href="https://github.com/YHY-coding/publish-guard/tree/main/skills/claim-check"><code>claim-check</code><span>出典のない数字と保証表現を見つける</span></a></li><li><a href="https://github.com/YHY-coding/publish-guard/tree/main/skills/expert-question-list"><code>expert-question-list</code><span>専門家に聞く項目を質問の表にする</span></a></li></ul></li>
+    <li class="pl"><a class="ph" href="https://github.com/YHY-coding/pwa-kit"><span class="t">pwa-kit</span><span class="g">アプリ作り</span><span class="d">端末の中だけで動く小さなPWAを作って確かめる。雛形・架空データ・iPhone幅の確認。</span></a>
+      <p class="sk-h">SKILLS 3</p>
+      <ul class="sk"><li><a href="https://github.com/YHY-coding/pwa-kit/tree/main/skills/pwa-scaffold"><code>pwa-scaffold</code><span>雛形から新しいPWAを作る</span></a></li><li><a href="https://github.com/YHY-coding/pwa-kit/tree/main/skills/fake-data-gen"><code>fake-data-gen</code><span>試験用の架空データを作る</span></a></li><li><a href="https://github.com/YHY-coding/pwa-kit/tree/main/skills/iphone-width-check"><code>iphone-width-check</code><span>幅375pxで、はみ出しを測る</span></a></li></ul></li>
+    <li class="pl"><a class="ph" href="https://github.com/YHY-coding/hasshin-kit"><span class="t">hasshin-kit</span><span class="g">発信の準備</span><span class="d">投稿の下書きとXの字数の確認、LP・UIの見本帳。投稿はしません。</span></a>
+      <p class="sk-h">SKILLS 2</p>
+      <ul class="sk"><li><a href="https://github.com/YHY-coding/hasshin-kit/tree/main/skills/post-draft"><code>post-draft</code><span>X・note・Instagramの下書きを書き、Xの字数を数える</span></a></li><li><a href="https://github.com/YHY-coding/hasshin-kit/tree/main/skills/lp-mihoncho"><code>lp-mihoncho</code><span>良いLP・UIの形を、出典つきで見本帳にためる</span></a></li></ul></li>
+    <li class="pl"><a class="ph" href="https://github.com/YHY-coding/decision-card"><span class="t">decision-card</span><span class="g">質問と報告</span><span class="d">Claudeからの質問を、スマホで答えられるカードにまとめる。報告の書式つき。</span></a>
+      <p class="sk-h">SKILLS 2</p>
+      <ul class="sk"><li><a href="https://github.com/YHY-coding/decision-card/tree/main/decision-card/skills/decision-card"><code>decision-card</code><span>質問・承認依頼を1件1枚のカードにする</span></a></li><li><a href="https://github.com/YHY-coding/decision-card/tree/main/decision-card/skills/clear-report"><code>clear-report</code><span>報告と依頼の書式をそろえる</span></a></li></ul></li>
   </ul>
+  <p class="note">プラグイン4つ、スキル11個。題名を押すとGitHubの説明(入れ方・確かめたこと・未確認のこと)が、スキル名を押すとその手順書が開きます。</p>
 </section>
 </main>
 <footer>
